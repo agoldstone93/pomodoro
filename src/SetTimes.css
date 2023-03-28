@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    grid-template-columns: 30px auto 30px;
+    gap: 10px;
+}
+
+#session-label, #break-label {
+    grid-column: 1 / 4;
+}
