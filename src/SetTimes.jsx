@@ -18,13 +18,21 @@ export function SetTimes({ name, sessionLength, setSessionLength, breakLength, s
     if (name === 'Session')
       setSessionLength(sessionLength + 1);
   };
+  
+  const decrement = () => {
+    if (name === 'Break' && breakLength > 0)
+      setBreakLength(breakLength - 1);
+
+    if (name === 'Session' && sessionLength > 0)
+      setSessionLength(sessionLength - 1);
+  };
 
   return (
-    <div class='container'>
+    <div className='container'>
       <p id={`${name.toLowerCase()}-label`}>{name} length</p>
-      <button id={`${name.toLowerCase()}-decrement`}>-</button>
+      <button onClick={decrement} id={`${name.toLowerCase()}-decrement`} className='plus-minus-buttons'>-</button>
       <p id={`${name.toLowerCase()}-length`}>{times()}</p>
-      <button onClick={increment} id={`${name.toLowerCase()}-increment`}>+</button>
+      <button onClick={increment} id={`${name.toLowerCase()}-increment` } className='plus-minus-buttons'>+</button>
     </div>
   );
 }

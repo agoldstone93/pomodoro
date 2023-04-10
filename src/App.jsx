@@ -1,5 +1,5 @@
 import './App.css'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SetTimes } from './SetTimes'
 
 function App() {
@@ -7,18 +7,34 @@ function App() {
   const [breakLength, setBreakLength] = React.useState(5)
   const [sessionLength, setSessionLength] = React.useState(25)
   const [timeLeft, setTimeLeft] = React.useState(25)
+  const [isRunning, setIsRunning] = React.useState(false)
 
-  const reset = () => {
+  const handleReset = () => {
     setBreakLength(5)
     setSessionLength(25)
+    setIsRunning(false)
     setTimeLeft(25)
+    clearTimeout()
   }
-
-  const timer = () => {
-    setInterval(() => {
-      setTimeLeft(timeLeft - 1)
-    }, 1000)
+  
+  const handleStart = () => {
+    setIsRunning((prevIsRunning) => {
+      if (prevIsRunning == true)
+        return false
+      else
+        return true
+    })
   }
+  
+  useEffect(() => {
+    if(isRunning && timeLeft > 0) {
+      setTimeout(() => {
+        setTimeLeft((prevTimeLeft) => prevTimeLeft - 1)
+      }, 1000)
+    } else {
+      clearTimeout()
+    }
+  }, [timeLeft, isRunning])
 
   return (
     <div className="App">
@@ -26,12 +42,16 @@ function App() {
         <SetTimes name="Break" setBreakLength={setBreakLength} breakLength={breakLength} />
         <SetTimes name="Session" setSessionLength={setSessionLength} sessionLength={sessionLength} />
       </div>
-      <div>
+      <div className='bottom-row'>
         <p id='timer-label'>{statusName}</p>
         <p id='time-left'>{timeLeft}</p>
+        <div className='start-stop-container'>
+          <button id='start_stop' onClick={handleStart}>
+            { isRunning ? 'Stop' : 'Start' }
+          </button>
+          <button id='reset' onClick={handleReset}>Reset</button>
+        </div>
       </div>
-      <button id='start_stop' onClick={timer}>Start/stop</button>
-      <button id='reset' onClick={reset}>Reset</button>
     </div>
     
   )

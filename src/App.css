@@ -1,4 +1,13 @@
 .top-row {
   display: flex;
-  gap: 30px;
+}
+
+.bottom-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.start-stop-container {
+  display: flex;
 }
