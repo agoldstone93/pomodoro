@@ -44,7 +44,7 @@ export function SetTimes({ name, sessionLength, setSessionLength, breakLength, s
         onClick={increment}
         id={`${name.toLowerCase()}-increment` }
         className='plus-minus-buttons'
-        isRunning>
+        disabled={isRunning}>
         +
         </button>
     </div>
