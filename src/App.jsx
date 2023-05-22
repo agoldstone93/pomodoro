@@ -39,8 +39,8 @@ function App() {
   return (
     <div className="App">
       <div className='top-row'>
-        <SetTimes name="Break" setBreakLength={setBreakLength} breakLength={breakLength} />
-        <SetTimes name="Session" setSessionLength={setSessionLength} sessionLength={sessionLength} />
+        <SetTimes name="Break" setBreakLength={setBreakLength} breakLength={breakLength} isRunning={isRunning} />
+        <SetTimes name="Session" setSessionLength={setSessionLength} sessionLength={sessionLength} isRunning={isRunning} />
       </div>
       <div className='bottom-row'>
         <p id='timer-label'>{statusName}</p>

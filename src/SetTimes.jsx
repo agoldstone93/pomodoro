@@ -1,7 +1,7 @@
 import React from 'react';
 import './SetTimes.css';
 
-export function SetTimes({ name, sessionLength, setSessionLength, breakLength, setBreakLength }) {
+export function SetTimes({ name, sessionLength, setSessionLength, breakLength, setBreakLength, isRunning }) {
 
   const times = () => {
     if (name === 'Break')
@@ -30,9 +30,23 @@ export function SetTimes({ name, sessionLength, setSessionLength, breakLength, s
   return (
     <div className='container'>
       <p id={`${name.toLowerCase()}-label`}>{name} length</p>
-      <button onClick={decrement} id={`${name.toLowerCase()}-decrement`} className='plus-minus-buttons'>-</button>
+      <button 
+        onClick={decrement}
+        id={`${name.toLowerCase()}-decrement`}
+        className='plus-minus-buttons'
+        disabled={isRunning}>
+          -
+      </button>
+      
       <p id={`${name.toLowerCase()}-length`}>{times()}</p>
-      <button onClick={increment} id={`${name.toLowerCase()}-increment` } className='plus-minus-buttons'>+</button>
+      
+      <button
+        onClick={increment}
+        id={`${name.toLowerCase()}-increment` }
+        className='plus-minus-buttons'
+        isRunning>
+        +
+        </button>
     </div>
   );
 }
