@@ -1,8 +1,10 @@
 import "./App.css";
 import React from "react";
+
 import { SetTimes } from "./SetTimes";
-import { useTimer } from "react-timer-hook";
 import { DisplayTime } from "./DisplayTime";
+
+import { useTimer } from "react-timer-hook";
 
 function App() {
   const [statusName, setStatusName] = React.useState("Session");
@@ -43,14 +45,14 @@ function App() {
       <div className="top-row">
         <SetTimes
           name="Break"
-          setBreakLength={setBreakLength}
-          breakLength={breakLength}
+          setStatusDuration={setBreakLength}
+          statusDuration={breakLength}
           isRunning={isRunning}
         />
         <SetTimes
           name="Session"
-          setSessionLength={setSessionLength}
-          sessionLength={sessionLength}
+          setStatusDuration={setSessionLength}
+          statusDuration={sessionLength}
           isRunning={isRunning}
         />
       </div>

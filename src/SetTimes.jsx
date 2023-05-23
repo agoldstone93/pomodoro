@@ -3,29 +3,16 @@ import "./SetTimes.css";
 
 export function SetTimes({
   name,
-  sessionLength,
-  setSessionLength,
-  breakLength,
-  setBreakLength,
+  setStatusDuration,
+  statusDuration,
   isRunning,
 }) {
-  const times = () => {
-    if (name === "Break") return breakLength;
-
-    if (name === "Session") return sessionLength;
-  };
-
   const increment = () => {
-    if (name === "Break") setBreakLength(breakLength + 1);
-
-    if (name === "Session") setSessionLength(sessionLength + 1);
+    if (statusDuration < 60) setStatusDuration(statusDuration + 1);
   };
 
   const decrement = () => {
-    if (name === "Break" && breakLength > 0) setBreakLength(breakLength - 1);
-
-    if (name === "Session" && sessionLength > 0)
-      setSessionLength(sessionLength - 1);
+    if (statusDuration > 1) setStatusDuration(statusDuration - 1);
   };
 
   return (
@@ -40,7 +27,7 @@ export function SetTimes({
         -
       </button>
 
-      <p id={`${name.toLowerCase()}-length`}>{times()}</p>
+      <p id={`${name.toLowerCase()}-length`}>{statusDuration}</p>
 
       <button
         onClick={increment}
