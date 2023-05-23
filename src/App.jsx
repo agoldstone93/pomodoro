@@ -2,6 +2,7 @@ import './App.css'
 import React from 'react'
 import { SetTimes } from './SetTimes'
 import { useTimer } from 'react-timer-hook'
+import { DisplayTime } from './DisplayTime'
 
 function App() {
   const [statusName, setStatusName] = React.useState('Session')
@@ -9,7 +10,19 @@ function App() {
   const [sessionLength, setSessionLength] = React.useState(25)
   
   const time = new Date();
-  time.setSeconds(time.getSeconds() + sessionLength); // 10 minutes timer
+  // session length timer (seconds)
+  time.setSeconds(time.getSeconds() + sessionLength);
+  
+  const handleExpire = () => {
+    if (statusName == "Session")
+    setStatusName("Break")
+    else
+    setStatusName("Session")
+    
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + breakLength); // 10 minutes timer
+    restart(time)
+  }
   
   const {
     seconds,
@@ -18,12 +31,17 @@ function App() {
     pause,
     resume,
     restart,
-  } = useTimer({ expiryTimestamp: time, autoStart: false, onExpire: () => console.warn('onExpire called') });
+  } = useTimer({ expiryTimestamp: time, autoStart: false, onExpire: handleExpire });
   
   const handleStartStop = () => (isRunning ? pause() : resume())
-  
-  // make always 2 digits, fill zeros at start if necessary
-  const twoDigitTime = (time) => String(time).padStart(2, '0')
+
+  const handleReset = () => {
+    // Restarts to 5 minutes timer
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + 5);
+
+    restart(time, false)
+  }
 
   return (
     <div className="App">
@@ -34,24 +52,14 @@ function App() {
 
       <div className='bottom-row'>
         <p id='timer-label'>{statusName}</p>
-        <div>
-          <span>{twoDigitTime(minutes)}</span>
-          :
-          <span>{twoDigitTime(seconds)}</span>
-        </div>
+        <DisplayTime minutes={minutes} seconds={seconds} />
         <p>{isRunning ? 'Running' : 'Not running'}</p>
         <div className='start-stop-container'>
 
-          <button onClick={handleStartStop}>
+          <button onClick={handleStartStop} id='start_stop'>
             { isRunning ? 'Stop' : 'Start' }
           </button>
-          <button onClick={() => {
-            // Restarts to 5 minutes timer
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 5);
-            
-            restart(time, false)
-          }}>Reset</button>
+          <button onClick={handleReset} id='reset'>Reset</button>
         </div>
       </div>
     </div>
